@@ -1,0 +1,23 @@
+# OS-specific files.
+.DS_Store
+
+# Compiled files.
+*.run
+
+# Python-related files.
+__pycache__
+
+# Editor-related files.
+*.swp
+*.swo
+*.swn
+*.vim
+
+# TeX-related files.
+*.aux
+*.log
+*.out
+
+# Ignore the data file directory.
+/data
+/models

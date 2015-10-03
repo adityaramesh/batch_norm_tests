@@ -1,0 +1,6 @@
+[submodule "torch_utils"]
+	path = torch_utils
+	url = https://github.com/adityaramesh/torch_utils
+[submodule "image_utils"]
+	path = image_utils
+	url = https://github.com/adityaramesh/image_utils

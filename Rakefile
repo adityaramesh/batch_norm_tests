@@ -237,13 +237,13 @@ task :exp_4_pp do
 		"-input data/svhn/raw/original/test.t7 "    \
 		"-output data/svhn/raw/original/test.hdf5 "
 
-	sh "th image_utils/scripts/convert.lua "                     \
-		"-input data/svhn/lcn/train_small_nrgb_gcn_lcn.t7 "  \
-		"-output data/svhn/lcn/train_small_nrgb_gcn_lcn.t7 "
+	sh "th image_utils/scripts/convert.lua "                       \
+		"-input data/svhn/lcn/train_small_nrgb_gcn_lcn.t7 "    \
+		"-output data/svhn/lcn/train_small_nrgb_gcn_lcn.hdf5 "
 
-	sh "th image_utils/scripts/convert.lua "             \
-		"-input data/svhn/lcn/test_nrgb_gcn_lcn.t7 " \
-		"-output data/svhn/lcn/test_nrgb_gcn_lcn.t7 "
+	sh "th image_utils/scripts/convert.lua "                \
+		"-input data/svhn/lcn/test_nrgb_gcn_lcn.t7 "    \
+		"-output data/svhn/lcn/test_nrgb_gcn_lcn.hdf5 "
 
 	epsilon.each do |e|
 		sh "python image_utils/scripts/whiten.py "                      \
@@ -285,5 +285,27 @@ task :exp_4_pp do
 		sh "image_utils/scripts/convert.lua "                  \
 			"-input data/svhn/whitened/test_pp_#{e}.hdf5 " \
 			"-output data/svhn/whitened/test_pp_#{e}.t7 "
+	end
+end
+
+task :run_exp_4 do
+	epsilon = [1e-1, 1e-3, 1e-5, 1e-7, 0]
+
+	sh "mkdir -p models"
+
+	epsilon.each do |e|
+		sh "th source/drivers/experiment_1.lua "                          \
+			"-model raw_#{e} "                                        \
+			"-task replace "                                          \
+			"-max_epochs 50 "                                         \
+			"-train_file data/svhn/whitened/train_small_raw_#{e}.t7 " \
+			"-test_file data/svhn/whitened/test_raw_#{e}.t7 "
+
+		sh "th source/drivers/experiment_1.lua "                         \
+			"-model pp_#{e} "                                        \
+			"-task replace "                                         \
+			"-max_epochs 50 "                                        \
+			"-train_file data/svhn/whitened/train_small_pp_#{e}.t7 " \
+			"-test_file data/svhn/whitened/test_pp_#{e}.t7 "
 	end
 end

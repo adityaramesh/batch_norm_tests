@@ -30,27 +30,41 @@ on SVHN:
 
 # Experiments
 
-- Experiment 1: is YUV or LAB better? Is per-pixel or per-image GCN better?
-  - RGB + per-pixel GCN + LCN
-  - RGB + per-image GCN + LCN
-  - YUV + GCN + LCN
-  - LAB + GCN + LCN
+- Experiment 1: which color scheme is best?
+  - RGB (no preprocessing)
+  - RGB + image-wide GCN
+  - YUV + image-wide GCN
+  - LAB + image-wide GCN
 
-- Experiment 2: which normalization scheme is best for SVHN?
-  - no preprocessing
-  - GCN
-  - LCN
-  - LCN (color channels only)
-  - GCN + LCN
-  - GCN + LCN (color channels only)
-  - subtracting mean image
+- Answer: GCN allowed the optimizer to make much more rapid progress.
+Surprisingly, RGB was the most effective color scheme by a considerable margin.
+At first, this seems somewhat counterintuitive, since LAB components are the
+least correlated, at least for natural images. I suspect that this doesn't hold
+for the house numbers. Since houses are designed by humans, the distribution of
+the colors used may be better described using RGB than YUV and LAB.
 
-- Experiment 3: how to use whitening?
-  - best scheme from experiment 2 (without whitening)
-  - whitening raw image
-  - whitening raw image with eps = 0.1
-  - whitening normalized image
-  - whitening normalized image with eps = 0.1
+- Experiment 2: how to do GCN?
+  - best setting from experiment 1
+  - best setting from experiment 1 using pixel-wide GCN
+  - best setting from experiment 1 using image-wide GCN followed by pixel-wide GCN
 
-- Experiment 4: how to use batch normalization?
+- Answer: not clear which scheme is better. Will proceed with only image-wide
+GCN for now. I would have expected image-wide and pixel-wide GCN to be better
+than using either one individually, but I didn't really see any difference.
+
+- Experiment 3: how to do LCN?
+  - best setting from experiment 2
+  - best setting with LCN
+  - best setting with LCN (color channels only)
+  - best setting with GCN + LCN
+  - best setting with GCN + LCN (color channels only)
+
+- Answer: GCN + LCN on all channels is best here.
+
+- Experiment 4: how to do whitening?
+  - best scheme from experiment 3 (no whitening)
+  - whitening raw image with eps in [1e-1, 1e-3, 1e-5, 1e-7, 0]
+  - whitening normalized image with eps in [1e-1, 1e-3, 1e-5, 1e-7, 0]
+
+- Experiment 5: how to use batch normalization?
   - TODO plan this

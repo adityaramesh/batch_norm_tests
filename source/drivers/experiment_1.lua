@@ -10,6 +10,7 @@ function options_func(cmd)
 	cmd:option("-train_file", "", "Path to file with training data.")
 	cmd:option("-test_file", "", "Path to file with testing data.")
 	cmd:option("-max_epochs", 80, "Number of epochs to train.")
+	cmd:option("-valid_epoch_ratio", 5, "Number of training epochs per validation epoch.")
 	cmd:option("-model_file", "source/models/cnn_5x5.lua", "Path to file that defines model architecture.")
 end
 
@@ -40,7 +41,8 @@ function get_train_info(opt)
 		},
 		opt_method = AdaDeltaLMOptimizer,
 		batch_size = 200,
-		max_epochs = opt.max_epochs
+		max_epochs = opt.max_epochs,
+		valid_epoch_ratio = opt.valid_epoch_ratio
 	}
 end
 

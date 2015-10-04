@@ -261,7 +261,7 @@ task :exp_4_pp do
 		sh "python image_utils/scripts/whiten.py "                     \
 			"-epsilon #{e} "                                       \
 			"-input data/svhn/lcn/train_small_nrgb_gcn_lcn.hdf5 "  \
-			"-output data/svhn/whitened/train_pp_#{e}.hdf5 "       \
+			"-output data/svhn/whitened/train_small_pp_#{e}.hdf5 " \
 			"-stats_output data/svhn/whitened/pp_stats_#{e}.hdf5 "
 
 		sh "python image_utils/scripts/whiten.py "                    \
@@ -270,19 +270,19 @@ task :exp_4_pp do
 			"-output data/svhn/whitened/test_pp_#{e}.hdf5 "       \
 			"-stats_input data/svhn/whitened/pp_stats_#{e}.hdf5 "
 
-		th "image_utils/scripts/convert.lua "                          \
+		sh "image_utils/scripts/convert.lua "                          \
 			"-input data/svhn/whitened/train_small_raw_#{e}.hdf5 " \
 			"-output data/svhn/whitened/train_small_raw_#{e}.t7 "
 
-		th "image_utils/scripts/convert.lua "                   \
+		sh "image_utils/scripts/convert.lua "                   \
 			"-input data/svhn/whitened/test_raw_#{e}.hdf5 " \
 			"-output data/svhn/whitened/test_raw_#{e}.t7 "
 
-		th "image_utils/scripts/convert.lua "                   \
-			"-input data/svhn/whitened/train_pp_#{e}.hdf5 " \
-			"-output data/svhn/whitened/train_pp_#{e}.t7 "
+		sh "image_utils/scripts/convert.lua "                         \
+			"-input data/svhn/whitened/train_small_pp_#{e}.hdf5 " \
+			"-output data/svhn/whitened/train_small_pp_#{e}.t7 "
 
-		th "image_utils/scripts/convert.lua "                  \
+		sh "image_utils/scripts/convert.lua "                  \
 			"-input data/svhn/whitened/test_pp_#{e}.hdf5 " \
 			"-output data/svhn/whitened/test_pp_#{e}.t7 "
 	end

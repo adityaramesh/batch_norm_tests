@@ -66,5 +66,18 @@ than using either one individually, but I didn't really see any difference.
   - whitening raw image with eps in [1e-1, 1e-3, 1e-5, 1e-7, 0]
   - whitening normalized image with eps in [1e-1, 1e-3, 1e-5, 1e-7, 0]
 
-- Experiment 5: how to use batch normalization?
-  - TODO plan this
+- Choosing epsilon too small results in garbage, but choosing epsilon
+effectively does nothing. I couldn't visually see much effect until epsilon was
+brought up to 0.1 or so. But for SVHN, using a value of epsilon this large
+results in some of the images being garbage. There doesn't seem to be an
+obvious way to choose epsilon based on the distribution of eigenvalues -- the
+values corresponding to where the "tail" starts are all at least 100. I doubt
+using values of epsilon this large would reallly do anything. Questions to answer:
+  - Try epsilon = 0.1, 1, 5, 10, and the predicted value from the method that
+  cuts off the tail. Which works best? Does using a large value of epsilon have
+  any effect even though we don't visually see any change?
+
+Note: using the "cutoff" technique in which we set the scale for all
+eigenvalues that we believe are noise to 1 is not a good idea.
+
+- Whitening seems to produce noisy junk for SVHN.

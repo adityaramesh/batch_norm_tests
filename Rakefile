@@ -270,19 +270,19 @@ task :exp_4_pp do
 			"-output data/svhn/whitened/test_pp_#{e}.hdf5 "       \
 			"-stats_input data/svhn/whitened/pp_stats_#{e}.hdf5 "
 
-		sh "image_utils/scripts/convert.lua "                          \
+		sh "th image_utils/scripts/convert.lua "                       \
 			"-input data/svhn/whitened/train_small_raw_#{e}.hdf5 " \
 			"-output data/svhn/whitened/train_small_raw_#{e}.t7 "
 
-		sh "image_utils/scripts/convert.lua "                   \
+		sh "th image_utils/scripts/convert.lua "                \
 			"-input data/svhn/whitened/test_raw_#{e}.hdf5 " \
 			"-output data/svhn/whitened/test_raw_#{e}.t7 "
 
-		sh "image_utils/scripts/convert.lua "                         \
+		sh "th image_utils/scripts/convert.lua "                      \
 			"-input data/svhn/whitened/train_small_pp_#{e}.hdf5 " \
 			"-output data/svhn/whitened/train_small_pp_#{e}.t7 "
 
-		sh "image_utils/scripts/convert.lua "                  \
+		sh "th image_utils/scripts/convert.lua "               \
 			"-input data/svhn/whitened/test_pp_#{e}.hdf5 " \
 			"-output data/svhn/whitened/test_pp_#{e}.t7 "
 	end
